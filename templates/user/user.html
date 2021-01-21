@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{full.id}}--{{full.first_name}}--{{full.middle_name}}--{{full.last_name}}--{{full.email}} -- {{full.created_at}} --{{full.get_role_name}}
+
+<p>
+	<a href="{% url 'get_all_users' %}">Back</a>
+</p>
+
+{% endblock content %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{full.id}}--{{full.name}}--{{full.description}}--{{full.count}}--{{full.authors}}
+
+<p>
+	<a href="{% url 'get_all_authors' %}">Back</a>
+</p>
+
+{% endblock content %}
