@@ -5,7 +5,6 @@
 <h1>Available authors</h1> <br>
 
 
-
 {% if authors %}
     <a  href="{% url 'new_author' %}">Add new author</a><br>    
         {% for el in authors %}
@@ -18,6 +17,6 @@
         {% endfor %}
 {% else %}
     <p>Sorry, no authors here so far. Would you like to <a href="{% url 'new_author' %}">add a new one</a>?</p>
-% endif %}
+{% endif %}
 
 {% endblock %}
