@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Author
 from .forms import AuthorForm
+from rest_framework.viewsets import ModelViewSet
+from .serializers import AuthorSerializer
 
 
 def get_all_authors(request):
@@ -36,3 +38,7 @@ def author_form(request, id=0):
 		if form.is_valid():
 			form.save()
 		return redirect('get_all_authors')
+
+class AuthorView(ModelViewSet):
+	queryset = Author.objects.all()
+	serializer_class = AuthorSerializer
