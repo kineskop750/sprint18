@@ -4,39 +4,37 @@ from author.models import Author
 from book.models import Book
 from .forms import OrderForm
 
-# Create your views here.
 
 def get_all_orders(request):
 	orders = Order.objects.all()
-	context = {'orders':orders}
+	context = {'orders': orders}
+	return render(request, 'order/all_order.html', context)
 
-	return render(request,'order/all_order.html',context)
 
-def get_order(request,id):
+def get_order(request, id):
 	full = Order.get_by_id(id)
-	return render(request,'order/order.html',{'full':full})
+	return render(request, 'order/order.html', {'full': full})
 
-def new_order(request):
-	if request.method != "POST":
-		form = OrderForm()
-	else:
-		form = OrderForm(request.POST)
-		if form.is_valid():
-			form.save()
-		return redirect('get_all_orders')
-	return render(request,'order/new_order.html',{'form':form})
 
-def delete_order(request,id):
+def delete_order(request, id):
 	Order.delete_by_id(id)
 	return redirect('get_all_orders')
 
-def edit_order(request,id):
-	order = Order.objects.get(pk=id)
-	if request.method != 'POST':
-		form = OrderForm()
+
+def order_form(request, id=0):
+	if request.method == 'GET':
+		if id == 0:
+			form = OrderForm()
+		else:
+			order = Order.get_by_id(id)
+			form = OrderForm(instance=order)
+		return render(request, 'order/order_form.html', {'form': form})
 	else:
-		form = OrderForm(instance=order,data=request.POST)
+		if id == 0:
+			form = OrderForm(request.POST)
+		else:
+			order = Order.get_by_id(id)
+			form = OrderForm(request.POST, instance=order)
 		if form.is_valid():
 			form.save()
-			return redirect('get_all_orders')
-	return render(request,'order/edit_order.html',{'order':order,'form':form})
+		return redirect('get_all_orders')
